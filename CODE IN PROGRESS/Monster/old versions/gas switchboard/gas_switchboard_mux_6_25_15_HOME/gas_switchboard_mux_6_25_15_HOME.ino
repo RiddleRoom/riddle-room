@@ -21,7 +21,7 @@ EthernetUDP Udp;
 //the Arduino's IP
 IPAddress ip(192, 168, 0, 10);
 //destination IP
-IPAddress outIp(192, 168, 0, 1);
+IPAddress outIp(192, 168, 0, 5);
 const unsigned int outPort = 10000;
 
  byte mac[] = {  
@@ -67,7 +67,7 @@ void setup(){
 
   Serial.begin(9600);
   Ethernet.begin(mac,ip);
-    Udp.begin(9000);
+    Udp.begin(outPort);
 }
 
 void loop(){
@@ -82,7 +82,7 @@ void loop(){
     msg.empty(); // free space occupied by message
     Serial.print("on");
     }
-    else{
+    else if (readMux(0) == 0) {
       digitalWrite(C0, LOW);
     OSCMessage msg("/0");
     msg.add(0);
@@ -103,7 +103,7 @@ void loop(){
     msg.empty(); // free space occupied by message
     Serial.println("on");
     }
-    else{
+    else if (readMux(1) == 0){
       digitalWrite(C1, LOW);
     OSCMessage msg("/1");
     msg.add(0);
@@ -122,7 +122,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(2) == 0){
     OSCMessage msg("/2");
     msg.add(0);
     Udp.beginPacket(outIp, outPort);
@@ -130,7 +130,8 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-        if (readMux(3) == 1){
+    
+    if (readMux(3) == 1){
       digitalWrite(C3, HIGH);
     OSCMessage msg("/3");
     msg.add(1);
@@ -139,7 +140,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(3) == 0){
       digitalWrite(C3, LOW);
     OSCMessage msg("/3");
     msg.add(0);
@@ -149,7 +150,7 @@ void loop(){
     msg.empty(); // free space occupied by message
     }
     
-        if (readMux(4) == 1){
+    if (readMux(4) == 1){
       digitalWrite(C4, HIGH);
     OSCMessage msg("/4");
     msg.add(1);
@@ -158,7 +159,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(4) == 0){
       digitalWrite(C4, LOW);
     OSCMessage msg("/4");
     msg.add(0);
@@ -168,7 +169,7 @@ void loop(){
     msg.empty(); // free space occupied by message
     }
     
-        if (readMux(5) == 1){
+    if (readMux(5) == 1){
       digitalWrite(C5, HIGH);
     OSCMessage msg("/5");
     msg.add(1);
@@ -178,7 +179,7 @@ void loop(){
     msg.empty(); // free space occupied by message
     Serial.println("5 on");
     }
-    else{
+    else if (readMux(5) == 0){
       digitalWrite(C5, LOW);
     OSCMessage msg("/5");
     msg.add(0);
@@ -197,7 +198,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(6) == 0){
     OSCMessage msg("/6");
     msg.add(0);
     Udp.beginPacket(outIp, outPort);
@@ -215,7 +216,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(7) == 0){
       digitalWrite(C7, LOW);
     OSCMessage msg("/7");
     msg.add(0);
@@ -234,7 +235,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(8) == 0){
       digitalWrite(C8, LOW);
     OSCMessage msg("/8");
     msg.add(0);
@@ -244,7 +245,7 @@ void loop(){
     msg.empty(); // free space occupied by message
     }
     
-        if (readMux(9) == 1){
+    if (readMux(9) == 1){
     OSCMessage msg("/9");
     msg.add(1);
     Udp.beginPacket(outIp, outPort);
@@ -252,7 +253,7 @@ void loop(){
     Udp.endPacket(); // mark the end of the OSC Packet
     msg.empty(); // free space occupied by message
     }
-    else{
+    else if (readMux(9) == 0){
     OSCMessage msg("/9");
     msg.add(0);
     Udp.beginPacket(outIp, outPort);
